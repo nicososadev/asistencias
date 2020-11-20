@@ -6,8 +6,7 @@ from apps.persona.models import Persona
 
 
 class TipoAsistencia(ModeloBase):
-    descripcion = models.CharField(max_length=150,
-                                   unique=True)
+    descripcion = models.CharField(max_length=150, unique=True)
 
     def __str__(self):
         return self.descripcion

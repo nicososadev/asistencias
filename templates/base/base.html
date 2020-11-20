@@ -29,6 +29,13 @@
                   <a href="#">Crear</a>
                 </div>
               </li>
+              <li class="dropdown">
+                <a href="javascript:void(0)" class="dropbtn">Beneficios</a>
+                <div class="dropdown-content">
+                  <a href="{% url 'programa:asignar-beneficio' %}">Asignar Beneficio</a>
+                  <a href="{% url 'programa:listar-beneficios' %}">Listar Beneficios</a>
+                </div>
+              </li>
             </ul>
             <section>
                 {% block contenido %}

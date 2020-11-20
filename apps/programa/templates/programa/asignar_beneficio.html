@@ -1,0 +1,21 @@
+{% extends "base/base.html" %}
+{% block titulo %}Asignar beneficio{% endblock %}
+{% block contenido %}
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'success' %}  <div class="message" role="status">{{ message }}</div>{% endif %}
+            {% if message.tags == 'error' %}  <div class="errors" role="alert">{{ message }}</div>{% endif %}
+        {% endfor %}
+    {% endif %}
+    <h1>Asignacion de beneficio</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% for field in form %}
+        <div class="campo">
+            {{ field.errors }}
+            {{ field.label_tag }} {{ field }}
+        </div><br>
+        {% endfor %}
+    {% csrf_token %}
+    <input type="submit" value="Asignar">
+</form>
+{% endblock %}

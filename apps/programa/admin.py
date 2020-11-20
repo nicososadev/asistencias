@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import TipoAsistencia, AsignacionBeneficio
+
+admin.site.register(TipoAsistencia)
+admin.site.register(AsignacionBeneficio)

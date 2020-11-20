@@ -2,8 +2,8 @@ from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 
-from .forms import ProgramaForm
-from .models import Programa
+from .forms import ProgramaForm, BeneficioForm
+from .models import Programa, AsignacionBeneficio
 
 
 def programa_lista(request):
@@ -60,3 +60,46 @@ def programa_edit(request, pk):
         form_programa = ProgramaForm(instance=programa)
 
     return render(request, 'programa/programa_edit.html', {'form': form_programa})
+
+def asignar_beneficio(request):
+
+    form = BeneficioForm(request.POST or None)
+
+    context = {
+        'form': form
+    }
+
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Se ha asignado el beneficio con éxtio')
+        return redirect('programa:asignar-beneficio')
+
+    return render(request, 'programa/asignar_beneficio.html', context)
+
+def listar_beneficios(request):
+
+    # Obtengo todos los beneficios para listarlos y los programas
+    beneficios = AsignacionBeneficio.objects.all()
+    programas = Programa.objects.all()
+
+    # Obtengo los parametros de GET para filtrar los beneficios
+    nombre_programa = request.GET.get('programa')
+    fecha_inicio = request.GET.get('fecha_inicio')
+    fecha_final = request.GET.get('fecha_final')
+
+    # Filtro de los beneficios
+    if nombre_programa != '':
+        beneficios = beneficios.filter(programa__nombre=nombre_programa)
+
+    if fecha_inicio != '' and fecha_inicio != None:
+        beneficios = beneficios.filter(fecha_entrega__gte=fecha_inicio)
+
+    if fecha_final != '' and fecha_final != None:
+        beneficios = beneficios.filter(fecha_entrega__lte=fecha_final)
+
+    context = {
+        'beneficios': beneficios,
+        'programas': programas
+    }
+
+    return render(request, 'programa/listado_beneficios.html', context)

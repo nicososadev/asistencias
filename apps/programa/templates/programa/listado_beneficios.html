@@ -1,0 +1,48 @@
+{% extends "base/base.html" %}
+{% block titulo %}Asignar beneficio{% endblock %}
+{% block contenido %}
+    <h1>Listado de beneficios</h1>
+    <form method="get" enctype="multipart/form-data">
+        
+        <div class="campo">
+            <label for="programa">Programa: </label>
+            <select name="programa">
+                {% for programa in programas %}
+                <option value="{{ programa.nombre }}">{{ programa.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="campo">
+            <label for="fecha_inicio">Fecha inicial: </label>
+            <input type="date" name="fecha_inicio" />
+        </div>
+        <div class="campo">
+            <label for="fecha_final">Fecha final: </label>
+            <input type="date" name="fecha_final" />
+        </div>
+        <br>
+    
+        <input type="submit" value="Buscar">
+    </form>
+
+    
+    <h2>Lista de Beneficios</h2>
+    <table>
+        <tr>
+            <th>Programa</th>
+            <th>Persona</th>
+            <th>Tipo Asistencia</th>
+            <th>Fecha Entrega</th>
+            <th>Cantidad</th>
+        </tr>
+        {% for beneficio in beneficios %}
+            <tr>
+              <td>{{ beneficio.programa }}</td>
+              <td>{{ beneficio.persona }}</td>
+              <td>{{ beneficio.tipo_asistencia }}</td>
+              <td>{{ beneficio.fecha_entrega }}</td>
+              <td>{{ beneficio.cantidad }}</td>
+            </tr>
+        {% endfor %}
+   </table>
+{% endblock %}
